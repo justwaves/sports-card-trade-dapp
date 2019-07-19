@@ -1,0 +1,50 @@
+type User {
+  id: ID! @id
+  username: String! @unique
+  email: String! @unique
+  firstName: String @default(value: "")
+  lastName: String
+  bio: String
+  following: [User!]! @relation(name: "FollowRelation")
+  followers: [User!]! @relation(name: "FollowRelation")
+  tikets: [Tiket!]!
+  cards: [Card!]!
+  likes: [Like!]!
+  comments: [Comment!]!
+}
+
+type Tiket {
+  id: ID! @id
+  match: String!
+  caption: String!
+  files: [File!]!
+}
+
+type Card {
+  id: ID! @id
+  match: String
+  caption: String!
+  user: User!
+  files: [File!]!
+  likes: [Like!]!
+  comments: [Comment!]!
+}
+
+type Like {
+  id: ID! @id
+  user: User!
+  card: Card!
+}
+
+type Comment {
+  id: ID! @id
+  text: String!
+  user: User!
+  card: Card!
+}
+
+type File {
+  id: ID! @id
+  url: String!
+  card: Card!
+}
