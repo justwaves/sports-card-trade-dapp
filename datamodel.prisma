@@ -1,9 +1,9 @@
 type User {
   id: ID! @id
+  avatar: String
   username: String! @unique
   email: String! @unique
-  firstName: String @default(value: "")
-  lastName: String
+  fullName: String @default(value: "")
   bio: String
   following: [User!]! @relation(name: "FollowRelation")
   followers: [User!]! @relation(name: "FollowRelation")
@@ -11,19 +11,21 @@ type User {
   cards: [Card!]!
   likes: [Like!]!
   comments: [Comment!]!
+  balance: Int! @default(value: 0)
+  loginSecret: String
 }
 
 type Tiket {
   id: ID! @id
   match: String!
-  caption: String!
-  files: [File!]!
+  information: String!
+  files: File!
 }
 
 type Card {
   id: ID! @id
-  match: String
-  caption: String!
+  playerName: String!
+  information: String!
   user: User!
   files: [File!]!
   likes: [Like!]!

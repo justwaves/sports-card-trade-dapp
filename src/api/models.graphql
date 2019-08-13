@@ -1,0 +1,68 @@
+type User {
+  id: ID!
+  avatar: String
+  username: String!
+  email: String!
+  fullName: String
+  isFollowing: Boolean!
+  isSelf: Boolean!
+  bio: String
+  following: [User!]!
+  followingCount: Int!
+  followers: [User!]!
+  followersCount: Int!
+  tikets: [Tiket!]!
+  cards: [Card!]!
+  likes: [Like!]!
+  comments: [Comment!]!
+  balance: Int!
+  loginSecret: String!
+  createdAt: String
+  updatedAt: String
+}
+
+type Tiket {
+  id: ID!
+  match: String!
+  information: String!
+  files: File!
+}
+
+type Card {
+  id: ID!
+  playerName: String!
+  information: String!
+  user: User!
+  files: [File!]!
+  likes: [Like!]!
+  comments: [Comment!]!
+  isLiked: Boolean!
+  likeCount: Int!
+  createdAt: String
+  updatedAt: String
+}
+
+type Like {
+  id: ID!
+  user: User!
+  card: Card!
+  createdAt: String
+  updatedAt: String
+}
+
+type Comment {
+  id: ID!
+  text: String!
+  user: User!
+  card: Card!
+  createdAt: String
+  updatedAt: String
+}
+
+type File {
+  id: ID!
+  url: String!
+  card: Card!
+  createdAt: String
+  updatedAt: String
+}

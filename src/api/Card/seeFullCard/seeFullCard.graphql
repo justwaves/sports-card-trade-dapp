@@ -1,0 +1,3 @@
+type Query {
+  seeFullCard(id: String!): Card!
+}
