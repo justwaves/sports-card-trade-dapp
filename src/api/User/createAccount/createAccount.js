@@ -9,8 +9,9 @@ export default {
         email,
         fullName,
         bio
-      });
-      return user;
+    });
+    console.log(user);
+    return user;
     }
   }
 };

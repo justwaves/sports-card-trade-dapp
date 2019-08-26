@@ -7,46 +7,66 @@ type User {
   bio: String
   following: [User!]! @relation(name: "FollowRelation")
   followers: [User!]! @relation(name: "FollowRelation")
-  tikets: [Tiket!]!
-  cards: [Card!]!
-  likes: [Like!]!
-  comments: [Comment!]!
+  tikets: [Tiket!]! @relation(name: "TiketsOfUser", onDelete: CASCADE)
+  cards: [Card!]! @relation(name: "CardsOfUser", onDelete: CASCADE)
+  likes: [Like!]! @relation(name: "LikesOfUser", onDelete: CASCADE)
+  comments: [Comment!]! @relation(name: "CommentsOfUser", onDelete: CASCADE)
   balance: Int! @default(value: 0)
   loginSecret: String
 }
 
 type Tiket {
   id: ID! @id
-  match: String!
-  information: String!
-  files: File!
+  homeTeam: Team! @relation(name: "HomeTikets", link: INLINE)
+  awayTeam: Team! @relation(name: "AwayTikets", link: INLINE)
+  date: DateTime!
+  stadium: Stadium! @relation(name: "StadiumOfTiket", link: INLINE)
+}
+
+type Team {
+  id: ID! @id
+  teamName: String!
+  players: [Player!] @relation(name: "PlayersOfTeam", onDelete: CASCADE)
+  homeTikets: [Tiket!]!  @relation(name: "HomeTikets")
+  awayTikets: [Tiket!]!  @relation(name: "AwayTikets")
+  imgUrl: String!
+  stadium: Stadium! @relation(name: "StadiumOfHomeTeam", link: INLINE)
+}
+
+type Stadium {
+  id: ID! @id
+  stadiumName: String!
+  homeTeam: Team! @relation(name: "StadiumOfHomeTeam")
+  tikets: [Tiket!]!  @relation(name: "StadiumOfTiket", onDelete: CASCADE)
+}
+
+type Player {
+  id: ID! @id
+  playerName: String!
+  team: Team! @relation(name: "PlayersOfTeam")
+  age: Int!
+  position: String!
+  uniformNumber: Int!
+  imgUrl: String!
 }
 
 type Card {
   id: ID! @id
-  playerName: String!
-  information: String!
-  user: User!
-  files: [File!]!
-  likes: [Like!]!
-  comments: [Comment!]!
+  player: Player!
+  user: User! @relation(name: "CardsOfUser")
+  likes: [Like!]! @relation(name: "LikeOfCard", onDelete: CASCADE)
+  comments: [Comment!]! @relation(name: "CommentOfCard", onDelete: CASCADE)
 }
 
 type Like {
   id: ID! @id
-  user: User!
-  card: Card!
+  user: User! @relation(name: "LikesOfUser")
+  card: Card! @relation(name: "LikeOfCard")
 }
 
 type Comment {
   id: ID! @id
   text: String!
-  user: User!
-  card: Card!
-}
-
-type File {
-  id: ID! @id
-  url: String!
-  card: Card!
+  user: User! @relation(name: "CommentsOfUser")
+  card: Card! @relation(name: "CommentOfCard")
 }

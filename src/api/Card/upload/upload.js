@@ -5,26 +5,19 @@ export default {
     upload: async (_, args, { request, isAuthenticated }) => {
       isAuthenticated(request);
       const { user } = request;
-      const { caption, files } = args;
+      const { playerName } = args;
       const card = await prisma.createCard({
-        caption,
+        player: {
+          connect: {
+            playerName: playerName
+          }
+        },
         user: {
           connect: {
             id: user.id
           }
         }
       });
-      files.forEach(
-        async file =>
-          await prisma.createFile({
-            url: file,
-            card: {
-              connect: {
-                id: card.id
-              }
-            }
-          })
-      );
       return card;
     }
   }

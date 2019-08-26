@@ -21,25 +21,51 @@ type User {
   updatedAt: String
 }
 
-type Tiket {
-  id: ID!
-  match: String!
-  information: String!
-  files: File!
-}
-
 type Card {
   id: ID!
-  playerName: String!
-  information: String!
+  player: Player!
   user: User!
-  files: [File!]!
   likes: [Like!]!
   comments: [Comment!]!
   isLiked: Boolean!
   likeCount: Int!
   createdAt: String
   updatedAt: String
+}
+
+type Player {
+  id: ID!
+  playerName: String!
+  team: Team!
+  age: Int!
+  position: String!
+  uniformNumber: Int!
+  imgUrl: String!
+}
+
+type Tiket {
+  id: ID!
+  homeTeam: Team!
+  awayTeam: Team!
+  date: String!
+  stadium: Stadium!
+}
+
+type Team {
+  id: ID!
+  teamName: String!
+  players: [Player!]
+  imgUrl: String!
+  homeTikets: [Tiket!]!
+  awayTikets: [Tiket!]!
+  stadium: Stadium!
+}
+
+type Stadium {
+  id: ID!
+  stadiumName: String!
+  homeTeam: Team!
+  tikets: [Tiket!]!
 }
 
 type Like {
@@ -54,14 +80,6 @@ type Comment {
   id: ID!
   text: String!
   user: User!
-  card: Card!
-  createdAt: String
-  updatedAt: String
-}
-
-type File {
-  id: ID!
-  url: String!
   card: Card!
   createdAt: String
   updatedAt: String
